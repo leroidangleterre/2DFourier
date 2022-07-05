@@ -28,10 +28,6 @@ public class WheelChain implements Subscriber {
     @Override
     public void update(String message) {
         String[] splitted = message.split(" ");
-        for (String s : splitted) {
-            System.out.println("    <" + s + ">");
-        }
-        System.out.println("---- end split");
         int index = Integer.valueOf(splitted[0]);
         String param = splitted[1];
         double value = Double.valueOf(splitted[2]);
@@ -40,17 +36,17 @@ public class WheelChain implements Subscriber {
 
         if (param.equals("length")) {
             currentWheel.setRadius(value);
-            System.out.println("Wheel " + index + " setting length to " + value);
         } else if (param.equals("freq")) {
             currentWheel.setFrequency(value);
-            System.out.println("Wheel " + index + " setting phase to " + value);
+        } else if (param.equals("phase")) {
+            currentWheel.setPhase(value);
         }
         computePositions();
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics g, int x0, int y0, double zoom) {
         for (Wheel w : list) {
-            w.paint(g);
+            w.paint(g, x0, y0, zoom);
         }
     }
 
